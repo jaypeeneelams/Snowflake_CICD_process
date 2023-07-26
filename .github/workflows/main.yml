@@ -17,19 +17,25 @@ jobs:
     - name: Setup python 3.8x
       uses: actions/setup-python@v2
       with:
-        node-version: '14.x'
+        python-version: '3.8.x'
 
-    - name: Install Dependencies
-      run: npm install
+    - name: Run Schemachange
+      Run Schemachange
+	
+	env:
 
-    - name: Run Tests
-      run: npm test
+      	SF_ACCOUNT: $(SF_ACCOUNT) 
+	SF_USERNAME: $(SF_USERNAME)  
+	SF_ROLE: $(SF_ROLE)
+	SF_WAREHOUSE: $(SF_WAREHOUSE)
+	SF_DATABASE: $(SF_DATABASE) 
+	SNOWFLAKE_PASSWORD: $(secrets.SF_PASSWORD)
 
-    - name: Generate Coverage Report
-      run: npm run coverage
+       run:
+	echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+	python --version
+	echo "step 1: installing schemachange"
+	pip install schemachange	
 
-    - name: Upload Coverage Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage-report
-        path: ./coverage
+	echo "step 2: running schemachange"
+	schemachange -f $GITHUB_WORKSPACE/dbscripts -a $(SF_ACCOUNT) -u $(SF_USERNAME) -r $(SF_ROLE) -w $(SF_WAREHOUSE) -d $(SF_DATABASE) -c $(SF_DATABASE).SCHEMACHANGE.CHANGE_HISTORY --create-change-history-table
