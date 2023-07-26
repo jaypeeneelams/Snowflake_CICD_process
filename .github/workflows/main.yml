@@ -18,8 +18,8 @@ jobs:
       with:
         python-version: '3.8.x'
     - name: Run Schemachange
-		env:
-  SF_ACCOUNT: $(SF_ACCOUNT) 
+	env:
+  	SF_ACCOUNT: $(SF_ACCOUNT) 
 	SF_USERNAME: $(SF_USERNAME)  
 	SF_ROLE: $(SF_ROLE)
 	SF_WAREHOUSE: $(SF_WAREHOUSE)
