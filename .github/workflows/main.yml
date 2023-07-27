@@ -1,4 +1,4 @@
-name: snowflake_cicd_process
+name: snowflake_cicd_process_git
 
 on:
   push:
